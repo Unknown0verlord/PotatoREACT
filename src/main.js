@@ -2,24 +2,59 @@ import React, {Component} from "react";
 import "./main.css"
 
 import Towers from "./towers";
-
+import Save from "./save";
+import Counters from "./counters";
 
 class Main extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            dataFromChild: null,
 
             patch: "v1.1.0",
 
             mainStats: {
-                potatoes: 10000,
+                potatoes: 0,
                 PpS: 0,
                 potatoUp: 1,
             },
             
-            
+            towers: {
+                spudSpitter: 0,
+                spudSpitterCost: 10,
+
+                farmer: 0,
+                farmerCost: 50,
+                farmerPpSadd: 1,
+
+                farm: 0,
+                farmCost: 300,
+                farmPpSadd: 5,
+
+                factory: 0,
+                factoryCost: 1000,
+                factoryPpSadd: 20,
+
+                district: 0,
+                districtCost: 5000,
+                districtPpSadd: 50,
+
+                convention: 0,
+                conventionCost: 20000,
+                conventionPpSadd: 100,
+
+                merchandise: 0,
+                merchandiseCost: 100000,
+                merchandisePpSadd: 500,
+
+                cult: 0,
+                cultCost: 666666,
+                cultPpSadd: 3000,
+
+                sponsorships: 0,
+                sponsorshipsCost: 1234567,
+                sponsorshipsPpSadd: 10000,
+            },
                 
             biggerYields: 0,
             moreFields: 0,
@@ -30,7 +65,8 @@ class Main extends Component {
             potatoSkinSacrifice: 0,
             moreBrands: 0
         }
-        this.handleDataFromChild = this.handleDataFromChild.bind(this);
+        this.updateMainStats = this.updateMainStats.bind(this);
+        this.giveTowers = this.giveTowers.bind(this);
     }
 
     clickFirstButton = () => {
@@ -59,11 +95,17 @@ class Main extends Component {
         this.setState({mainStats: mainStats})
     }
     
-    progress = setInterval(this.progressBar, 1000);
-    addPpS = setInterval(this.PpS, 1000)
+    componentDidMount() {
+        setInterval(this.progressBar, 1000);
+        setInterval(this.PpS, 1000)
+    }
 
-    handleDataFromChild(data) {
+    updateMainStats(data) {
         this.setState({ mainStats: data });
+    }
+
+    giveTowers(data) {
+        this.setState({ towers: data });
     }
 
     render() {
@@ -86,12 +128,10 @@ class Main extends Component {
                 {/* Make a Potato Button */}
                 <button type="button" onClick={this.clickFirstButton}>Make a Potato!</button>
 
-                <Towers mainStats={this.state.mainStats} onData={this.handleDataFromChild} />
+                <Towers mainStats={this.state.mainStats} towers={this.state.towers} updateMainStats={this.updateMainStats} giveTowers={this.giveTowers} />
+                <Counters towers={this.state.towers} />
+                <Save mainStats={this.state.mainStats} towers={this.state.towers} updateMainStats={this.updateMainStats} giveTowers={this.giveTowers} />
             </div>
-            
-            
-        
-        
         )
     }
 }

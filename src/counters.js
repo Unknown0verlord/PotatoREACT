@@ -6,26 +6,26 @@ class Counters extends Component {
         super(props);
 
         this.state = {
-
+            towers: props.towers
         }
     }
 
     render() {
         return(
             <div id="counts">
-                <button type="button" class="saveData" onclick="setSessionVariables(1)">Save</button>
-                <button type="button" id="removeData" onclick="deleteData()">Clear Data</button>
                 <p>Amounts <br />---------------</p>
-                <p id="spudSpitterCount">Spud Spitters: 0</p>
-                <p id="farmerCount">Potato Farmers: 0</p>
-                <p id="farmCount">Potato Farms: 0</p>
-                <p id="factoryCount">Potato Factories: 0</p>
-                <p id="districtCount">Industrial Districts: 0</p>
-                <p id="conventionCount">Potato Conventions: 0</p>
-                <p id="merchandiseCount">Potato Merchandise: 0</p>
-                <p id="cultCount">Potato Cults: 0</p>
-                <p id="sponsorshipsCount">Potato Sponsorships: 0</p>
+                <p id="spudSpitterCount">Spud Spitters: {this.state.towers.spudSpitter}</p>
+                <p id="farmerCount">Potato Farmers: {this.state.towers.farmer}</p>
+                <p id="farmCount">Potato Farms: {this.state.towers.farm}</p>
+                <p id="factoryCount">Potato Factories: {this.state.towers.factory}</p>
+                <p id="districtCount">Industrial Districts: {this.state.towers.district}</p>
+                <p id="conventionCount">Potato Conventions: {this.state.towers.convention}</p>
+                <p id="merchandiseCount">Potato Merchandise: {this.state.towers.merchandise}</p>
+                <p id="cultCount">Potato Cults: {this.state.towers.cult}</p>
+                <p id="sponsorshipsCount">Potato Sponsorships: {this.state.towers.sponsorships}</p>
             </div>
         )
     }
 }
+
+export default Counters;

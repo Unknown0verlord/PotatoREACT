@@ -116,6 +116,7 @@ p {
     color:white;
     font-size: 20px;
     margin-left: 88%;
+    top: 15%;
     position:fixed;
     width: 11%;
     height: 70%;
@@ -197,6 +198,16 @@ p {
     align-items: normal;
     justify-content: center;
     display: block;
+}
+
+#save {
+    height:fit-content;
+    width: 11%;
+    background-color: #4CAF50;
+    border-radius: 10px;
+    margin-left: 88%;
+    top: 5%;
+    position:fixed;
 }
 
 #saveBlock {

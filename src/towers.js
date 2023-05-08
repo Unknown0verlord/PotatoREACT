@@ -1,52 +1,19 @@
 import React, {Component} from "react";
 import "./main.css";
 
+import Counters from "./counters";
+
 class Towers extends Component {
     constructor(props) {
         super(props);
         this.state = {
             mainStats: props.mainStats,
             
-            towers: {
-                spudSpitter: 0,
-                spudSpitterCost: 10,
-
-                farmer: 0,
-                farmerCost: 50,
-                farmerPpSadd: 1,
-
-                farm: 0,
-                farmCost: 300,
-                farmPpSadd: 5,
-
-                factory: 0,
-                factoryCost: 1000,
-                factoryPpSadd: 20,
-
-                district: 0,
-                districtCost: 5000,
-                districtPpSadd: 50,
-
-                convention: 0,
-                conventionCost: 20000,
-                conventionPpSadd: 100,
-
-                merchandise: 0,
-                merchandiseCost: 100000,
-                merchandisePpSadd: 500,
-
-                cult: 0,
-                cultCost: 666666,
-                cultPpSadd: 3000,
-
-                sponsorships: 0,
-                sponsorshipsCost: 1234567,
-                sponsorshipsPpSadd: 10000,
-            }
+            towers: props.towers
         };
     }
 
-
+    
 
     towers = (number) => {
         var mainStats = this.state.mainStats;
@@ -65,7 +32,7 @@ class Towers extends Component {
 
                 this.setState({mainStats: mainStats});
                 this.setState({towers: towers});
-                this.props.onData(this.state.mainStats);
+                this.props.updateMainStats(this.state.mainStats);
             }
         } else if (number === 2) {
             if (mainStats.potatoes >= towers.farmerCost) {
@@ -80,7 +47,8 @@ class Towers extends Component {
 
                 this.setState({mainStats: mainStats});
                 this.setState({towers: towers});
-                this.props.onData(this.state.mainStats);
+                this.props.updateMainStats(this.state.mainStats);
+                this.props.giveTowers(this.state.towers);
             }
         } else if (number === 3) {
             if (mainStats.potatoes >= towers.farmCost) {
@@ -95,7 +63,8 @@ class Towers extends Component {
 
                 this.setState({mainStats: mainStats});
                 this.setState({towers: towers});
-                this.props.onData(this.state.mainStats);
+                this.props.updateMainStats(this.state.mainStats);
+                this.props.giveTowers(this.state.towers);
             }
         } else if (number === 4) {
             if (mainStats.potatoes >= towers.factoryCost) {
@@ -110,27 +79,88 @@ class Towers extends Component {
 
                 this.setState({mainStats: mainStats});
                 this.setState({towers: towers});
-                this.props.onData(this.state.mainStats);
+                this.props.updateMainStats(this.state.mainStats);
+                this.props.giveTowers(this.state.towers);
             }
         } else if (number === 5) {
-            if (this.state.potatoes >= this.state.districtCost) {
-            
+            if (mainStats.potatoes >= towers.districtCost) {
+                towers.district += 1;
+                mainStats.potatoes -= towers.districtCost;
+                towers.districtCost = Math.floor(5000 * (1.15 ** towers.district));
+                mainStats.PpS += towers.districtPpSadd;
+
+                if (mainStats.potatoes < towers.districtCost) {
+                    document.getElementById("industrialDistrict").style.backgroundColor = '#006600';
+                }
+
+                this.setState({mainStats: mainStats});
+                this.setState({towers: towers});
+                this.props.updateMainStats(this.state.mainStats);
+                this.props.giveTowers(this.state.towers);
             }
         } else if (number === 6) {
-            if (this.state.potatoes >= this.state.conventionCost) {
-            
+            if (mainStats.potatoes >= towers.conventionCost) {
+                towers.convention += 1;
+                mainStats.potatoes -= towers.conventionCost;
+                towers.conventionCost = Math.floor(20000 * (1.15 ** towers.convention));
+                mainStats.PpS += towers.conventionPpSadd;
+
+                if (mainStats.potatoes < towers.conventionCost) {
+                    document.getElementById("potatoConvention").style.backgroundColor = '#006600';
+                }
+
+                this.setState({mainStats: mainStats});
+                this.setState({towers: towers});
+                this.props.updateMainStats(this.state.mainStats);
+                this.props.giveTowers(this.state.towers);
             }
         } else if (number === 7) {
-            if (this.state.potatoes >= this.state.merchandiseCost) {
-            
+            if (mainStats.potatoes >= towers.merchandiseCost) {
+                towers.merchandise += 1;
+                mainStats.potatoes -= towers.merchandiseCost;
+                towers.merchandiseCost = Math.floor(100000 * (1.15 ** towers.merchandise));
+                mainStats.PpS += towers.merchandisePpSadd;
+
+                if (mainStats.potatoes < towers.merchandiseCost) {
+                    document.getElementById("potatoMerchandise").style.backgroundColor = '#006600';
+                }
+
+                this.setState({mainStats: mainStats});
+                this.setState({towers: towers});
+                this.props.updateMainStats(this.state.mainStats);
+                this.props.giveTowers(this.state.towers);
             }
         }  else if (number === 8) {
-            if (this.state.potatoes >= this.state.cultCost) {
-            
+            if (mainStats.potatoes >= towers.cultCost) {
+                towers.cult += 1;
+                mainStats.potatoes -= towers.cultCost;
+                towers.cultCost = Math.floor(666666 * (1.15 ** towers.cult));
+                mainStats.PpS += towers.cultPpSadd;
+
+                if (mainStats.potatoes < towers.cultCost) {
+                    document.getElementById("potatoCult").style.backgroundColor = '#006600';
+                }
+
+                this.setState({mainStats: mainStats});
+                this.setState({towers: towers});
+                this.props.updateMainStats(this.state.mainStats);
+                this.props.giveTowers(this.state.towers);
             }
         }  else if (number === 9) {
-            if (this.state.potatoes >= this.state.sponsorshipsCost) {
-            
+            if (mainStats.potatoes >= towers.sponsorshipsCost) {
+                towers.sponsorships += 1;
+                mainStats.potatoes -= towers.sponsorshipsCost;
+                towers.sponsorshipsCost = Math.floor(1234567 * (1.15 ** towers.sponsorships));
+                mainStats.PpS += towers.sponsorshipsPpSadd;
+
+                if (mainStats.potatoes < towers.sponsorshipsCost) {
+                    document.getElementById("potatoSponsorships").style.backgroundColor = '#006600';
+                }
+
+                this.setState({mainStats: mainStats});
+                this.setState({towers: towers});
+                this.props.updateMainStats(this.state.mainStats);
+                this.props.giveTowers(this.state.towers);
             }
         }
     }
@@ -160,6 +190,36 @@ class Towers extends Component {
         document.getElementById("potatoFactory").style.backgroundColor = "#33cc33";
     } else {
         document.getElementById("potatoFactory").style.backgroundColor = "#006600";
+    }
+
+    if (potatoes >= this.state.towers.districtCost) {
+        document.getElementById("industrialDistrict").style.backgroundColor = "#33cc33";
+    } else {
+        document.getElementById("industrialDistrict").style.backgroundColor = "#006600";
+    }
+
+    if (potatoes >= this.state.towers.conventionCost) {
+        document.getElementById("potatoConvention").style.backgroundColor = "#33cc33";
+    } else {
+        document.getElementById("potatoConvention").style.backgroundColor = "#006600";
+    }
+
+    if (potatoes >= this.state.towers.merchandiseCost) {
+        document.getElementById("potatoMerchandise").style.backgroundColor = "#33cc33";
+    } else {
+        document.getElementById("potatoMerchandise").style.backgroundColor = "#006600";
+    }
+    
+    if (potatoes >= this.state.towers.cultCost) {
+        document.getElementById("potatoCult").style.backgroundColor = "#33cc33";
+    } else {
+        document.getElementById("potatoCult").style.backgroundColor = "#006600";
+    }
+
+    if (potatoes >= this.state.towers.sponsorshipsCost) {
+        document.getElementById("potatoSponsorships").style.backgroundColor = "#33cc33";
+    } else {
+        document.getElementById("potatoSponsorships").style.backgroundColor = "#006600";
     }
     
     }
@@ -215,7 +275,7 @@ class Towers extends Component {
                 {/* Industrial District Tower Button */}
                 <button className="towers" id="industrialDistrict" type="Button" onClick={() => this.towers(5)}>
                     <p>Industrial Disrict</p>
-                    <p className="towerText" id="districtText">Cost: 5,000</p>
+                    <p className="towerText" id="districtText">Cost: {this.state.towers.districtCost}</p>
                     <p className="towerDesc" id="districtDesc">An entire district of factories dedicated to Potatoes.  &#40;{this.state.towers.districtPpSadd} PpS&#41;</p>
                 </button>
 
@@ -224,14 +284,14 @@ class Towers extends Component {
                 {/* Potato Convention Tower Button */}
                 <button className="towers" id="potatoConvention" type="Button" onClick={() => this.towers(6)}>
                     <p>Potato Convention</p>
-                    <p className="towerText" id="conventionText">Cost: 20,000</p>
+                    <p className="towerText" id="conventionText">Cost: {this.state.towers.conventionCost}</p>
                     <p className="towerDesc" id="conventionDesc">Host a convention for potatoes - "Potato-Con"! &#40;{this.state.towers.conventionPpSadd} PpS&#41;</p>
                 </button>
 
                 {/* Potato Merchandise Tower Button */}
                 <button className="towers" id="potatoMerchandise" type="Button" onClick={() => this.towers(7)}>
                     <p>Potato Merchandise</p>
-                    <p className="towerText" id="merchandiseText">Cost: 100,000</p>
+                    <p className="towerText" id="merchandiseText">Cost: {this.state.towers.merchandiseCost}</p>
                     <p className="towerDesc" id="merchandiseDesc">Sell Merchandise with Potato Branding. &#40;{this.state.towers.merchandisePpSadd} PpS&#41;</p>
                 </button>
 
@@ -240,17 +300,19 @@ class Towers extends Component {
                 {/* Potato Cult Tower Button */}
                 <button className="towers" id="potatoCult" type="Button" onClick={() => this.towers(8)}>
                     <p>Potato Cult</p>
-                    <p className="towerText" id="cultText">Cost: 666,666</p>
+                    <p className="towerText" id="cultText">Cost: {this.state.towers.cultCost}</p>
                     <p className="towerDesc" id="cultDesc">Start Cults worshipping Potatoes. &#40;{this.state.towers.cultPpSadd} PpS&#41;</p>
                 </button>
         
                 {/* Potato Sponsorships Tower Button */}
                 <button className="towers" id="potatoSponsorships" type="Button" onClick={() => this.towers(9)}>
                     <p>Potato Sponsorships</p>
-                    <p className="towerText" id="sponsorshipsText">Cost: 1,234,567</p>
+                    <p className="towerText" id="sponsorshipsText">Cost: {this.state.towers.sponsorshipsCost}</p>
                     <p className="towerDesc" id="sponsorshipsDesc">Sponsor Events with Potatoes. &#40;{this.state.towers.sponsorshipsPpSadd} PpS&#41;</p>
                 </button>
             </div>
+
+            
         )
     }
 }
