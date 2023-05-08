@@ -1,7 +1,8 @@
-import React, {Component, Components} from "react";
+import React, {Component} from "react";
 import "./main.css"
 
 import Towers from "./towers";
+
 
 class Main extends Component {
     constructor(props) {
@@ -13,7 +14,7 @@ class Main extends Component {
             patch: "v1.1.0",
 
             mainStats: {
-                potatoes: 0,
+                potatoes: 10000,
                 PpS: 0,
                 potatoUp: 1,
             },
@@ -38,28 +39,34 @@ class Main extends Component {
         this.setState({mainStats: mainStats});
     }
 
-    // progressBar = () => {
-    //     var elem = document.getElementById("progressBar");   
-    //     var width = 1;
-    //     var id = setInterval(frame, 10);
-    //     function frame() {
-    //         if (width >= 100) {
-    //             clearInterval(id);
-    //         } else {
-    //             width++; 
-    //             elem.style.width = width + '%'; 
-    //         }
-    //     }
-    // }
+    progressBar = () => {
+        var elem = document.getElementById("progressBar");   
+        var width = 1;
+        var id = setInterval(frame, 10);
+        function frame() {
+            if (width >= 100) {
+                clearInterval(id);
+            } else {
+                width++; 
+                elem.style.width = width + '%'; 
+            }
+        }
+    }
+
+    PpS = () => {
+        var mainStats = this.state.mainStats;
+        mainStats.potatoes += mainStats.PpS;
+        this.setState({mainStats: mainStats})
+    }
     
-    // progress = setInterval(this.progressBar, 1000);
+    progress = setInterval(this.progressBar, 1000);
+    addPpS = setInterval(this.PpS, 1000)
 
     handleDataFromChild(data) {
-        this.setState({ dataFromChild: data });
-      }
+        this.setState({ mainStats: data });
+    }
 
     render() {
-        var value1 = this.state.mainStats.potatoes;
         return(
             <div>
                 {/* Main Div with Potatoes and PpS */}
@@ -79,7 +86,7 @@ class Main extends Component {
                 {/* Make a Potato Button */}
                 <button type="button" onClick={this.clickFirstButton}>Make a Potato!</button>
 
-                <Towers potatoes={value1} />
+                <Towers mainStats={this.state.mainStats} onData={this.handleDataFromChild} />
             </div>
             
             
