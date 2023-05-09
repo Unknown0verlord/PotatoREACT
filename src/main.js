@@ -71,7 +71,7 @@ class Main extends Component {
 
     clickFirstButton = () => {
         var mainStats = this.state.mainStats
-        mainStats.potatoes = this.state.mainStats.potatoes + this.state.mainStats.potatoUp;
+        mainStats.potatoes = mainStats.potatoes + mainStats.potatoUp;
         this.setState({mainStats: mainStats});
     }
 
@@ -91,8 +91,8 @@ class Main extends Component {
 
     PpS = () => {
         var mainStats = this.state.mainStats;
-        mainStats.potatoes += mainStats.PpS;
-        this.setState({mainStats: mainStats})
+        mainStats.potatoes += (mainStats.PpS / 2);
+        this.setState({mainStats: mainStats});
     }
     
     componentDidMount() {
